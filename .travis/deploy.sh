@@ -33,9 +33,14 @@
 # $END_LICENSE$
 #
 
+TRAVIS_BRANCH=develop
+
 ssh-keyscan $DEPLOY_HOST 2>&1 | tee -a $HOME/.ssh/known_hosts
 openssl aes-256-cbc -K $encrypted_a841ddf051d0_key -iv $encrypted_a841ddf051d0_iv -in .travis/github_deploy_key_fluid.enc -out /tmp/github_deploy_key_fluid -d
 eval "$(ssh-agent -s)"
 chmod 600 /tmp/github_deploy_key_fluid
 ssh-add /tmp/github_deploy_key_fluid
+ls -al
+ls -al build
+find build
 rsync -crvz --rsh="ssh" --delete-after --delete-excluded build/default/install-root/share/doc/fluid/html/ $DEPLOY_USER@$DEPLOY_HOST:$TRAVIS_BRANCH
