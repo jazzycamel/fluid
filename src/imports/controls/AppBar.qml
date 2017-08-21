@@ -18,6 +18,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.0
+import QtQuick.Window 2.0
 import Fluid.Core 1.0
 import Fluid.Controls 1.0 as FluidControls
 
@@ -95,6 +96,24 @@ ToolBar {
     property AppToolBar toolbar
 
     implicitHeight: Device.gridUnit
+
+    MouseArea {
+        enabled: window.clientSideDecorations
+        anchors.fill: parent
+        property var previousPosition
+        onPressed: previousPosition=Qt.point(mouseX,mouseY)
+        onDoubleClicked: {
+            if(window.visibility!==Window.FullScreen) window.visibility=Window.FullScreen;
+            else window.visibility=Window.Windowed;
+        }
+        onPositionChanged: {
+            if(pressedButtons!==Qt.LeftButton) return;
+            var dx=mouseX-previousPosition.x;
+            var dy=mouseY-previousPosition.y;
+            window.x+=dx;
+            window.y+=dy;
+        }
+    }
 
     IconButton {
         id: leftButton
@@ -212,6 +231,12 @@ ToolBar {
                     onObjectRemoved: overflowMenu.removeItem(index)
                 }
             }
+        }
+
+        FluidControls.IconButton {
+            visible: window.clientSideDecorations
+            onClicked: Qt.quit()
+            iconName: "navigation/close"
         }
     }
 }

@@ -39,6 +39,7 @@
         <file>ThinDivider.qml</file>
         <file>TitleLabel.qml</file>
         <file>Units.qml</file>
+        <file>Resizer.qml</file>
         <file>+material/BaseListItem.qml</file>
         <file>+material/BodyLabel.qml</file>
         <file>+material/CaptionLabel.qml</file>

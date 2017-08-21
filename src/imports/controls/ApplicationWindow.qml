@@ -86,9 +86,16 @@ ApplicationWindow {
      */
     property alias pageStack: pageStack
 
+    property bool clientSideDecorations: false
+
     header: FluidControls.AppToolBar {
         id: appBar
     }
+
+//    FluidControls.Resizer {
+//        id: __resizer
+//        visible: window.clientSideDecorations
+//    }
 
     FluidControls.PageStack {
         id: pageStack
@@ -104,5 +111,9 @@ ApplicationWindow {
         id: platformExtensions
         window: window
         decorationColor: Material.shade(window.Material.primaryColor, Material.Shade700)
+    }
+
+    Component.onCompleted: {
+        if(window.clientSideDecorations) flags|=Qt.FramelessWindowHint
     }
 }
